@@ -1,0 +1,14 @@
+Dst_IP
+Fwd_Pkts/b_Avg
+Bwd_Blk_Rate_Avg
+Bwd_Byts/b_Avg
+Fwd_Seg_Size_Min
+Fwd_Blk_Rate_Avg
+Fwd_URG_Flags
+Bwd_Pkts/b_Avg
+Fwd_PSH_Flags
+Init_Fwd_Win_Byts
+Src_IP
+Flow_ID
+Timestamp
+Fwd_Byts/b_Avg
