@@ -6,17 +6,20 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import time
 import pickle
+from pathlib import Path
+
 
 print("=" * 70)
 print(" ENTRAÎNEMENT DES MODÈLES DE DÉTECTION D'INTRUSION IoT")
 print("=" * 70)
 
 # 1. CHARGEMENT DES DONNÉES
-print("\n Chargement des données...")
-X_train = np.load('X_train.npy')
-X_test = np.load('X_test.npy')
-y_train = np.load('y_train.npy')
-y_test = np.load('y_test.npy')
+data_dir = Path('processed_data')
+
+X_train = np.load(data_dir / 'X_train.npy')
+X_test = np.load(data_dir / 'X_test.npy')
+y_train = np.load(data_dir / 'y_train.npy')
+y_test = np.load(data_dir / 'y_test.npy')
 
 # Charge le LabelEncoder pour les noms de classes
 with open('label_encoder.pkl', 'rb') as f:
@@ -32,12 +35,6 @@ print(f" Classes : {len(class_names)} ({', '.join(class_names)})")
 print("\n" + "=" * 70)
 print(" RANDOM FOREST CLASSIFIER")
 print("=" * 70)
-
-print("\n  Configuration du modèle...")
-print("   - n_estimators: 100 arbres")
-print("   - max_depth: 20")
-print("   - class_weight: balanced (gère le déséquilibre)")
-print("   - n_jobs: -1 (utilise tous les CPU)")
 
 start_time = time.time()
 
@@ -166,35 +163,20 @@ for i, class_name in enumerate(class_names):
 print("\n Sauvegarde du modèle...")
 with open('rf_model.pkl', 'wb') as f:
     pickle.dump(rf_model, f)
-print("✅ Modèle sauvegardé : rf_model.pkl")
+print(" Modèle sauvegardé : rf_model.pkl")
 
 # 11. RÉSUMÉ FINAL
 print("\n" + "=" * 70)
-print("🎉 ENTRAÎNEMENT TERMINÉ !")
+print(" ENTRAÎNEMENT TERMINÉ !")
 print("=" * 70)
 
 print(f"""
-📊 RÉSUMÉ DES PERFORMANCES :
+RÉSUMÉ DES PERFORMANCES :
    
    ✅ Accuracy globale    : {accuracy*100:.2f}%
    ✅ F1-Score moyen      : {f1:.4f}
    ✅ Temps d'entraînement: {train_time:.2f}s
    ✅ Nombre de features  : {X_train.shape[1]}
    ✅ Nombre de classes   : {len(class_names)}
-
-📁 FICHIERS GÉNÉRÉS :
-   - confusion_matrix_rf.png
-   - confusion_matrix_normalized.png
-   - feature_importance.png
-   - rf_model.pkl
-
-💡 PROCHAINES ÉTAPES :
-   1. Analyse les graphiques générés
-   2. Note l'accuracy pour ton CV (probablement 85-95%)
-   3. Crée un README.md avec les résultats
-   4. Push sur GitHub
 """)
 
-print("=" * 70)
-print("🚀 Projet terminé avec succès !")
-print("=" * 70)
